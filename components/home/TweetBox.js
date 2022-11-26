@@ -1,4 +1,4 @@
-import { useState} from 'react'
+import React, { useState, useRef} from 'react'
 import { BsCardImage, BsEmojiSmile } from 'react-icons/bs'
 import { RiFileGifLine, RiBarChartHorizontalFill } from 'react-icons/ri'
 import { IoMdCalendar } from 'react-icons/io'
@@ -6,7 +6,7 @@ import { MdOutlineLocationOn } from 'react-icons/md'
 import {client} from '../../lib/client'
 import { useContext } from 'react'
 import { TwitterContext } from '../../context/TwitterContext'
-import { useRouter } from 'next/router'
+
 
 const style = {
     wrapper: `p-4 my-5 mx-3 rounded-3xl  bg-[#191d20] flex flex-row `,
@@ -23,8 +23,20 @@ const style = {
     fileInput: `hidden`,
 }
 const TweetBox = () => {
-    const [tweetMessage, setTweetMessage] = useState('')
+    const [tweetMessage, setTweetMessage] = useState()
+    const [image,setImage] =useState('')
     const {currentAccount, currentUser} = useContext(TwitterContext)
+    const [imageUrlBox, setImageUrlBox] = useState(false)
+    const imageInputRef = useRef(null)
+
+    const addImageToTweet = async(event) => {
+        event.preventDefault()
+        if(!imageInputRef.current?.value) return
+        setImage(imageInputRef.current.value)
+        imageInputRef.current.value = ''
+        setImageUrlBox(false)
+
+    }
 
     const postTweet = async (event) => {
         event.preventDefault()
@@ -36,8 +48,8 @@ const TweetBox = () => {
         const tweetDoc = {
             _type: 'tweets',
             _id: tweetId,
-         
-            tweetImage: tweetImage,
+            tweet: tweetMessage,
+            tweetImage: image,
             timestamp: new Date(Date.now()).toISOString(),
             author: {
                 _key: tweetId,
@@ -80,20 +92,11 @@ const TweetBox = () => {
                   />
                   <div className={style.formLowerContainer}>
                       <div className={style.iconsContainer}>
-                           <label
-                               htmlFor='image-upload'
-                           >
-                               <input
-                                   type='file'
-                                   id='image-upload'
-                                   accept='.jpg, .jpeg, .png'
-                                   className={style.fileInput}
-                                   placeholder='Image URL'
-                                   onChange={e => setTweetImage(e.target.value)}
-                               />
+                          
                         
-                                <BsCardImage className={style.icon} />
-                           </label>
+                          <BsCardImage onClick={() => setImageUrlBox(!imageUrlBox)}
+                          className={style.icon} />
+                           
                           <RiFileGifLine className={style.icon} />
                           <RiBarChartHorizontalFill className={style.icon} />
                           <BsEmojiSmile className={style.icon} />
@@ -111,6 +114,18 @@ const TweetBox = () => {
                            
                       </button>
                   </div>
+                  {imageUrlBox &&(
+                       <form className='mt-5 flex rounded-lg bg-[#334250a7] py-2 px-4'>
+                           <input ref={imageInputRef}
+                           className='flex-1 bg-transparent p-2 text-white outline-none placeholder:text-[#334250a]' type="text" placeholder='Enter Image URL...'/>
+                        <button type='submit' onClick={(e) => addImageToTweet(e)}
+                         className='font-medium text-[#dadada] '>Add Image</button>
+                      </form>
+
+                  )}
+                  {image && (
+                    <img className='mt-10 h-40 w-full rounded-xl object-contain shadow-lg' src={image} alt=''/>
+                  )}
               </form>
           
           </div>

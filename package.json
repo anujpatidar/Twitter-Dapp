@@ -5,6 +5,7 @@
     "@sanity/client": "^3.4.1",
     "alchemy-sdk": "^2.2.3",
     "axios": "^1.2.0",
+    "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
     "next": "^12.1.0",
     "react": "^17.0.2",
@@ -16,6 +17,7 @@
     "timeago-react": "^3.0.5"
   },
   "scripts": {
+    "vercel-build": "next build",
     "dev": "next dev"
   },
   "devDependencies": {

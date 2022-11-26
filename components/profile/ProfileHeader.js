@@ -27,7 +27,16 @@ const style = {
 const ProfileHeader = () => {
     const router = useRouter();
     const { currentAccount, currentUser } = useContext(TwitterContext)
-    
+
+    const addImageToTweet = async (event) => {
+        event.preventDefault()
+        if (!imageInputRef.current?.value) return
+        setImage(imageInputRef.current.value)
+        imageInputRef.current.value = ''
+        setImageUrlBox(false)
+
+    }
+
   return (
       <div className={style.wrapper}>
           <div className={style.header}>
@@ -43,6 +52,7 @@ const ProfileHeader = () => {
           </div>
           <div className={style.coverPhotoContainer}>
               <img
+                  onClick={() => setImageUrlBox(!imageUrlBox)}
                   src={currentUser.coverImage}
                   alt={currentUser.walletAddress}
                   className={style.coverPhoto}
@@ -62,9 +72,12 @@ const ProfileHeader = () => {
           <div className={style.details2}>
               <div>
                       <div className={style.primary2}>{currentUser.name}
-                      <span className={style.verfied}>
-                          <MdVerified />
-                      </span>
+                        {currentUser.isProfileImageNft
+                              ? <span className={style.verfied}>
+                                  <MdVerified />
+                              </span>
+                              : <span></span>}
+                          
                       </div>
                   <div className={style.secondary}>
                           @{currentAccount.slice(0, 8)}...{currentAccount.slice(37)}
@@ -73,13 +86,22 @@ const ProfileHeader = () => {
       </div>
           </div>
           <div className={style.details}>
-          <div className={style.nav}>
-              <div className={style.activeNav}>Tweets</div>
-              <div>Tweets & Replies</div>
-              <div>Media</div>
-              <div>Likes</div>
+            <div className={style.nav}>
+                <div className={style.activeNav}>Tweets</div>
+                <div>Tweets & Replies</div>
+                <div>Media</div>
+                <div>Likes</div>
+            </div>
           </div>
-          </div>
+          {imageUrlBox && (
+              <form className='mt-5 flex rounded-lg bg-[#334250a7] py-2 px-4'>
+                  <input ref={imageInputRef}
+                      className='flex-1 bg-transparent p-2 text-white outline-none placeholder:text-[#334250a]' type="text" placeholder='Enter Image URL...' />
+                  <button type='submit' onClick={(e) => addImageToTweet(e)}
+                      className='font-medium text-[#dadada] '>Add Image</button>
+              </form>
+
+          )}
       </div>
   )
 }

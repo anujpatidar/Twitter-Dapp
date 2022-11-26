@@ -13,10 +13,11 @@ const style =
     name: `font-medium text-sm mr-1`,
     verfied: `text-md px-2 text-[#32abf2]`,
     handleAndTimeAgo: `text-xs text-[#8899a6] ml-1`,
-    tweet: `my-2 text-sm`,
+    tweet: `my-2 text-[15px]`,
+    tweetImage:`max-h-80 my-4 rounded-2xl object-cover`,
     image: `rounded-3xl`,
     footer: `flex justify-between mr-15 ml-15 mt-4 text-[#8899a6]`,
-    footerIcon: `text-lg p-2`,
+    footerIcon: `text-small flex items-center p-2 `,
     names: `text-sm`,
 }
 
@@ -25,13 +26,14 @@ const Post =({
     userName,
     text,
     avatar,
+    tweetImage,
     timestamp,
     isProfileImageNft,
 }) => {
     return (
         <div className={style.wrapper}>
         <div>
-              <img src={avatar} alt={userName} className={isProfileImageNft ? `${style.profileImage} smallHex` : style.profileImage} />
+          <img src={avatar} alt={userName} className={isProfileImageNft ? `${style.profileImage} smallHex` : style.profileImage} />
         </div>
         <div className={style.postMain}>
             
@@ -47,28 +49,30 @@ const Post =({
                 </span>
                 </span>
                 <div className={style.tweet}>{text}</div>
+                {tweetImage && <img src={tweetImage} alt="Tweet Image" className={style.tweetImage}/>}
                     
               
                 <div className={style.footer}>
                       <div
                           className={`${style.footerIcon} hover:text-[#1d9bf0] `}
                       >
-                       <TbMessageDots />
+                       <TbMessageDots  className="h-5 w-5 mx-2"/>
+                       
                       </div>
                       <div
                           className={`${style.footerIcon} hover:text-[#03ba7c] `}
                       >
-                          <AiOutlineRetweet />
+                        <AiOutlineRetweet className="h-5 w-5 mx-2" />
                       </div>
                       <div
                           className={`${style.footerIcon} hover:text-[#f91c80] `}
                       >
-                          <AiOutlineHeart/>
+                        <AiOutlineHeart className="h-5 w-5 mx-2" />
                       </div>
                       <div
                           className={`${style.footerIcon} hover:text-[#1d9bf0]`}
                       >
-                          <BiShare />
+                        <BiShare className="h-5 w-5 mx-2" />
                       </div>  
                 </div>
            

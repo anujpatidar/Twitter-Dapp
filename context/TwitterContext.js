@@ -71,6 +71,7 @@ export const TwitterProvider = ({ children }) => {
                 _id: userAddress,
                 name: 'Unnamed',
                 isProfileImageNft: false,
+                coverImage: "https://www.fotor.com/blog/wp-content/uploads/2021/05/twitter-image-1024x328.jpg",
                 profileImage:
                     'https://about.twitter.com/content/dam/about-twitter/en/brand-toolkit/brand-download-img-1.jpg.twimg.1920.jpg',
                 walletAddress: userAddress,
@@ -98,7 +99,8 @@ export const TwitterProvider = ({ children }) => {
       *[_type == "tweets"]{
         "author": author->{name, walletAddress, profileImage, isProfileImageNft},
         tweet,
-        timestamp
+        timestamp,
+        tweetImage
       }|order(timestamp desc)
     `
 
@@ -117,6 +119,7 @@ export const TwitterProvider = ({ children }) => {
                 const newItem = {
                     tweet: item.tweet,
                     timestamp: item.timestamp,
+                    tweetImage: item.tweetImage,
                     author: {
                         name: item.author.name,
                         walletAddress: item.author.walletAddress,

@@ -15,6 +15,12 @@ export const tweetSchema = {
         },
         
         {
+            name: 'tweetImage',
+            title: 'Tweet Image',
+            type: 'string',
+        },
+        
+        {
             name: 'author',
             title: 'Author',
             type: 'reference',

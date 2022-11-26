@@ -1,7 +1,7 @@
 import Sidebar from '../components/Sidebar'
 import Widgets from '../components/Widgets'
-import ProfileHeader from '../components/profile/profileHeader'
-import ProfileTweets from '../components/profile/profileTweets'
+import ProfileHeader from '../components/profile/ProfileHeader'
+import ProfileTweets from '../components/profile/ProfileTweets'
 
 const style = {
     wrapper: `flex h-screen w-screen overflow-hidden select-none bg-[#121212] text-[#f2f2f2] font-light`,

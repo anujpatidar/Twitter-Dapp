@@ -11,10 +11,11 @@ const style = {
 
 const ProfileTweets = () => {
     const { currentAccount, currentUser } = useContext(TwitterContext)
+    const { tweets } = useContext(TwitterContext)
   return (
     <div className={style.wrapper}>
       <div className={style.feed}>
-          {currentUser.tweets?.map((tweets, index) => (
+          {currentUser.tweets?.map((tweet, index) => (
               <Post
                   key={index}
                   displayName={currentUser.name === 'Unnamed'
@@ -25,9 +26,10 @@ const ProfileTweets = () => {
                       : currentUser.name}
                   userName={`${currentAccount.slice(0, 4)}...${currentAccount.slice(-4)}`}
                   avatar={currentUser.profileImage}
-                  text={tweets.tweet}
+                  text={tweet.tweet}
+                  tweetImage={tweet.tweetImage}
                   isProfileImageNft={currentUser.isProfileImageNft}
-                  timestamp={tweets.timestamp}
+                  timestamp={tweet.timestamp}
               />
           ))}
       </div>
